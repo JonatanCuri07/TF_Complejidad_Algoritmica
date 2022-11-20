@@ -46,14 +46,14 @@ def divide_and_conquer(hospital):
 
 def draw_points(csv, index, hospital):
     #se dibuja ubicación de hospital seleccionado
-    plt.scatter(x=float(csv[index][2]), y=float(csv[index][3]), color='r', s=200)
+    plt.scatter(x=float(csv[index][2]), y=float(csv[index][3]), color='r', zorder = 1, s=200)
     #se dibuja ubicación de farmacias cercanas
-    plt.scatter(x=[float(h[0][2]) for h in hospital], y=[float(h[0][3]) for h in hospital], color='g', s=15)
+    plt.scatter(x=[float(h[0][2]) for h in hospital], y=[float(h[0][3]) for h in hospital], color='g', zorder = 1, s=15)
     #se dibuja farmacia mas cercana	
-    plt.scatter(x=float(hospital[0][0][2]), y=float(hospital[0][0][3]), color='y', s=50) 
+    plt.scatter(x=float(hospital[0][0][2]), y=float(hospital[0][0][3]), color='y', zorder = 1, s=50) #farmacia mas cercana	
 
 #lambda para dibujar una linea desde hospital a farmacias cercanas
-draw_line = lambda start, end: plt.plot([float(start[2]), float(end[0][2])], [float(start[3]), float(end[0][3])],'b-.', linewidth=0.5)
+draw_line = lambda start, end: plt.plot([float(start[2]), float(end[0][2])], [float(start[3]), float(end[0][3])],'b-.', zorder=0, linewidth=0.5)
 
 def get_closer_pharmacy(name, max_range, price):
   #se obtienen los datos de la dataset subida al repositorio de GitHub
