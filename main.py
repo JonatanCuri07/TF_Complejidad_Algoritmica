@@ -39,3 +39,18 @@ def divideyvenceras(hospital):
     current = [current]
     hospital = lst_left + current + lst_right
     return(hospital)
+
+def get_closer_pharmacy(name, max_range, price):
+  #se obtienen los datos de la dataset subida al repositorio de GitHub
+  hospitals_csv = pd.read_csv("https://raw.githubusercontent.com/JonatanCuri07/TF_Complejidad_Algoritmica/master/Hospitales_Final.csv").to_numpy()
+  farmacias_csv = pd.read_csv("https://raw.githubusercontent.com/JonatanCuri07/TF_Complejidad_Algoritmica/master/Farmacias_Final_VF.csv").to_numpy()
+  index_hospital = np.where(hospitals_csv==name)[0][0]
+  print(name, max_range, price)
+  
+  hospitals = making_adjacency_list(hospitals_csv, farmacias_csv, float(max_range), price)
+  hospital = hospitals[index_hospital]
+  hospital = divideyvenceras(hospital)
+  
+  print("La farmacia más cercana es ",hospital[0][0][0], ", está ubicada en ", hospital[0][0][1]," a una distancia de ", hospital[0][1], "km")
+
+  resultado["text"] = f"La farmacia más cercana es {hospital[0][0][0]}, está ubicada en {hospital[0][0][1]} a una distancia de {hospital[0][1]} km"
