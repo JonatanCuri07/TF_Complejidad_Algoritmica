@@ -1,3 +1,7 @@
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+import matplotlib.pyplot as plt
 import pandas as pd
 import math
 import geopy.distance
@@ -21,7 +25,7 @@ def making_adjacency_list(hospitals_csv, farmacias_csv, max_range, price = "Econ
         hospitals[x].append((farmacias_csv[y], dis))
   return hospitals #se retorna arreglo de hospitales con sus farmacias cercanas
 
-def divideyvenceras(hospital):
+def divide_and_conquer(hospital):
     n = len(hospital)
     if n == 0:
         return[]
@@ -33,12 +37,23 @@ def divideyvenceras(hospital):
       lst_right.append(next) if next[1] > current[1] else lst_left.append(next)
 
     if not len(lst_left)<=1:
-        lst_left=divideyvenceras(lst_left)
+        lst_left=divide_and_conquer(lst_left)
     if not len(lst_right)<=1:
-        lst_right=divideyvenceras(lst_right)
+        lst_right=divide_and_conquer(lst_right)
     current = [current]
     hospital = lst_left + current + lst_right
     return(hospital)
+
+def draw_points(csv, index, hospital):
+    #se dibuja ubicación de hospital seleccionado
+    plt.scatter(x=float(csv[index][2]), y=float(csv[index][3]), color='r', s=200)
+    #se dibuja ubicación de farmacias cercanas
+    plt.scatter(x=[float(h[0][2]) for h in hospital], y=[float(h[0][3]) for h in hospital], color='g', s=15)
+    #se dibuja farmacia mas cercana	
+    plt.scatter(x=float(hospital[0][0][2]), y=float(hospital[0][0][3]), color='y', s=50) 
+
+#lambda para dibujar una linea desde hospital a farmacias cercanas
+draw_line = lambda start, end: plt.plot([float(start[2]), float(end[0][2])], [float(start[3]), float(end[0][3])],'b-.', linewidth=0.5)
 
 def get_closer_pharmacy(name, max_range, price):
   #se obtienen los datos de la dataset subida al repositorio de GitHub
@@ -49,8 +64,14 @@ def get_closer_pharmacy(name, max_range, price):
   
   hospitals = making_adjacency_list(hospitals_csv, farmacias_csv, float(max_range), price)
   hospital = hospitals[index_hospital]
-  hospital = divideyvenceras(hospital)
+  hospital = divide_and_conquer(hospital)
   
   print("La farmacia más cercana es ",hospital[0][0][0], ", está ubicada en ", hospital[0][0][1]," a una distancia de ", hospital[0][1], "km")
 
   resultado["text"] = f"La farmacia más cercana es {hospital[0][0][0]}, está ubicada en {hospital[0][0][1]} a una distancia de {hospital[0][1]} km"
+
+  for h in hospital:
+    #se dibuja una linea para conectar hospital como máximo con las 50 farmacias más cercanas
+    draw_line(hospitals_csv[index_hospital], h)
+  draw_points(hospitals_csv, index_hospital, hospital)
+  plt.show()
