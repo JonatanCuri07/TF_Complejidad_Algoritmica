@@ -75,3 +75,44 @@ def get_closer_pharmacy(name, max_range, price):
     draw_line(hospitals_csv[index_hospital], h)
   draw_points(hospitals_csv, index_hospital, hospital)
   plt.show()
+
+def ventana1():
+    v1=Tk()
+    v1.title("Programa")
+    v1.geometry("1200x700")
+    v1.configure(bg="black")
+
+    #texto de hospital
+    hospital = Label(v1, text="Nombre del Hospital:", font=("Times New Roman",15), bg="black", fg="white").place(x=10,y=10)
+    txthospital = ttk.Entry(v1, width=30)
+    txthospital.pack()
+    txthospital.place(x=200,y=15)
+
+    #eleccion
+    eleccion = Label(v1, text="Precio:", font=("Times New Roman",15), bg="black", fg="white").place(x=10,y=50)
+    combo = ttk.Combobox(v1, state="readonly", values=["Economico", "Costoso"])
+    combo.pack()
+    combo.place(x=200,y=55)
+
+    #Rango
+    rango = Label(v1, text="Rango de distancia:", font=("Times New Roman",15), bg="black", fg="white").place(x=10,y=90)
+    txtrango = ttk.Entry(v1, width=30)
+    txtrango.pack()
+    txtrango.place(x=200,y=95)
+
+    #boton
+    btninicio = Button(v1, text="Comenzar el programa", font=("Times New Roman",15), command=lambda:get_closer_pharmacy(txthospital.get(), txtrango.get(), combo.get())).place(x=450, y = 55)   
+
+    global resultado
+    resultado = Label(v1, font=('Calibri', 10), bg="black", fg="white", text="")
+    resultado.pack()
+    resultado.place(x=10,y=135)
+
+
+    v1.mainloop()
+
+def mensaje():
+    messagebox.showinfo("Creadores", "Creado por: \n *Kendall Contreras \n *Gabriela Nomberto \n *Jonatan Curi")
+
+def salir():
+    ventana.destroy()
