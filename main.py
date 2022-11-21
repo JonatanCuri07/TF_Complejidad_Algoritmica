@@ -116,3 +116,33 @@ def mensaje():
 
 def salir():
     ventana.destroy()
+
+
+
+plt.rcParams['figure.figsize'] = (8,8)
+ventana = Tk()
+ventana.title("Ventana")
+ventana.geometry("553x311")
+ventana.resizable(0,0)
+ventana.configure(bg = "gray")
+v = Label(ventana).place(x=0,y=0)
+
+titulo= Label(ventana)
+titulo.config(text="Complejidad Algorítmica - WS6A", anchor="center", font=("Cascadia Code SemiBold",20), bg="white")
+titulo.pack()
+
+boton1 = Button(ventana, text="Iniciar Programa", font=("Times New Roman",15), command=ventana1)
+boton1.pack()
+
+boton2 = Button(ventana, text="Creadores",font=("Times New Roman",15), command=mensaje)
+boton2.pack()
+
+boton3 = Button(ventana, text="Salir",font=("Times New Roman",15), command=salir)
+boton3.pack()
+
+titulo.place(x=45, y=20)
+boton1.place(x=220, y=100)
+boton2.place(x=240, y=150)
+boton3.place(x=260, y=200)
+
+ventana.mainloop()
