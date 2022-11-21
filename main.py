@@ -21,7 +21,7 @@ def making_adjacency_list(hospitals_csv, farmacias_csv, max_range, price = "Econ
   for x in range(len(hospitals_csv)):
     for y in range(len(farmacias_csv)):
       dis = distance_between_points(hospitals_csv[x],farmacias_csv[y]) #obtener la distancia entre el hospital y la farmacia
-      if dis <= max_range and farmacias_csv[y][4] == price: #se compara si la farmacia cumple requisitos del usuario
+      if dis <= max_range and farmacias_csv[y][4] == price and len(hospitals[x])<50: #se compara si la farmacia cumple requisitos del usuario
         hospitals[x].append((farmacias_csv[y], dis))
   return hospitals #se retorna arreglo de hospitales con sus farmacias cercanas
 
