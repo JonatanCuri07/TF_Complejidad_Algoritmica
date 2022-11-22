@@ -22,6 +22,7 @@ def making_adjacency_list(hospitals_csv, farmacias_csv, max_range, price = "Econ
     for y in range(len(farmacias_csv)):
       dis = distance_between_points(hospitals_csv[x],farmacias_csv[y]) #obtener la distancia entre el hospital y la farmacia
       if dis <= max_range and farmacias_csv[y][4] == price and len(hospitals[x])<50: #se compara si la farmacia cumple requisitos del usuario
+        print(farmacias_csv[y], "la distancia entre el hospital y la farmacia es", dis, "km")
         hospitals[x].append((farmacias_csv[y], dis))
   return hospitals #se retorna arreglo de hospitales con sus farmacias cercanas
 
@@ -46,11 +47,19 @@ def divide_and_conquer(hospital):
 
 def draw_points(csv, index, hospital):
     #se dibuja ubicación de hospital seleccionado
-    plt.scatter(x=float(csv[index][2]), y=float(csv[index][3]), color='r', zorder = 1, s=200)
+    plt.scatter(x=float(csv[index][2]), y=float(csv[index][3]), color='r', zorder = 2, s=100)
     #se dibuja ubicación de farmacias cercanas
-    plt.scatter(x=[float(h[0][2]) for h in hospital], y=[float(h[0][3]) for h in hospital], color='g', zorder = 1, s=15)
+    plt.scatter(x=[float(h[0][2]) for h in hospital], y=[float(h[0][3]) for h in hospital], color='g', zorder = 2, s=15)
     #se dibuja farmacia mas cercana	
-    plt.scatter(x=float(hospital[0][0][2]), y=float(hospital[0][0][3]), color='y', zorder = 1, s=50) #farmacia mas cercana	
+    plt.scatter(x=float(hospital[0][0][2]), y=float(hospital[0][0][3]), color='y', zorder = 2, s=50) #farmacia mas cercana	
+
+def draw_all(hospitals_csv, hospitals):
+  for i in range(len(hospitals_csv)):
+    plt.scatter(x=float(hospitals_csv[i][2]), y=float(hospitals_csv[i][3]), color='m', zorder = 1, s=15)
+    plt.scatter(x=[float(h[0][2]) for h in hospitals[i]], y=[float(h[0][3]) for h in hospitals[i]], color='c', zorder = 1, s=15)
+    for hospital in hospitals[i]:
+      draw_line(hospitals_csv[i], hospital)
+
 
 #lambda para dibujar una linea desde hospital a farmacias cercanas
 draw_line = lambda start, end: plt.plot([float(start[2]), float(end[0][2])], [float(start[3]), float(end[0][3])],'b-.', zorder=0, linewidth=0.5)
@@ -74,6 +83,7 @@ def get_closer_pharmacy(name, max_range, price):
     #se dibuja una linea para conectar hospital como máximo con las 50 farmacias más cercanas
     draw_line(hospitals_csv[index_hospital], h)
   draw_points(hospitals_csv, index_hospital, hospital)
+  draw_all(hospitals_csv, hospitals)
   plt.show()
 
 def ventana1():
@@ -119,7 +129,7 @@ def salir():
 
 
 
-plt.rcParams['figure.figsize'] = (8,8)
+plt.rcParams['figure.figsize'] = (17,9)
 ventana = Tk()
 ventana.title("Ventana")
 ventana.geometry("553x311")
