@@ -6,7 +6,7 @@ Repositorio creado a fin de desarrollar el Trabajo Parcial y Final de Complejida
 | * | Integrantes |
 | ------ | ------ |
 | 1 | Kendall Ramiro Contreras Salazar |
-| 2 | Gabriea Soledad Nomberto Ramos |
+| 2 | Gabriela Soledad Nomberto Ramos |
 | 3 | Jonatan Omar Curi Montero |
 
 # Planteamiento de la Problematica
